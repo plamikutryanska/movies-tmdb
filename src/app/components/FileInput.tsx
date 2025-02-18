@@ -12,10 +12,7 @@ const FileInput: FC = () => {
       <input type="file" accept=".txt" onChange={handleInputChange} id={'file-upload'} className="hidden"/>
       <label
         htmlFor="file-upload"
-        className="flex items-center space-x-2 cursor-pointer
-                  rounded-lg bg-purple-600 hover:bg-purple-700
-                  text-white px-4 py-2 text-sm font-medium
-                  shadow-md transition-all mb-6"
+        className="file-upload-btn"
       >
         <ArrowUpOnSquareIcon className="h-5 w-5"/>
         <span>Choose File</span>

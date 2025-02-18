@@ -2,20 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.file-upload-btn {
+  @apply flex items-center space-x-2 cursor-pointer rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-medium shadow-md transition-all mb-6
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.button {
+  @apply bg-purple-600 w-72 p-2 mt-4 rounded-full shadow-lg text-white hover:shadow-xl transition-shadow hover:bg-purple-700 self-center
 }

@@ -5,8 +5,6 @@ import { FC, useContext, createContext, useState} from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from  'axios'
 import { MoviesContextType } from "../constants/types";
-import { Value } from "sass";
-
 
 const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY
 const BASE_URL = 'https://api.themoviedb.org/3'
@@ -80,8 +78,7 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
       .map((movie) => movie.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
       .map((movie) => movie.toLocaleLowerCase())
       .map((movie) => {
-        const cleanedMovie = movie.replace(/@/g, 'a')
-                                  .replace(/[^a-z0-9\s@\-]/g, "")
+        const cleanedMovie = movie.replace(/@/g, 'a').replace(/[^a-z0-9\s@\-]/g, "")
         return cleanedMovie;
       })
       .filter(Boolean)

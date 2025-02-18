@@ -45,7 +45,7 @@ const fetchMovies = async (movieTitle: string) => {
     }
   })
 
-  return response.data.results[0]
+  return response.data.results.length > 0 ? response.data.results[0] : null
 }
 
 const MoviesContext = createContext<MoviesContextType | undefined>(undefined)
@@ -60,10 +60,10 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
   const {data, isLoading, error} = useQuery({
     queryKey: ['movies', selectedMovieTitles],
     queryFn: async () => {
-      const fetchData = selectedMovieTitles.map((movieTitle) =>
-        fetchMovies(movieTitle)
+      const fetchData = await Promise.all(
+        selectedMovieTitles.map((movieTitle) => fetchMovies(movieTitle))
       );
-      return Promise.all(fetchData);
+      return fetchData.filter(Boolean)
     },
     enabled: searchTriggered,
     staleTime: Infinity 
@@ -76,7 +76,18 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
     const fileReader = new FileReader()
     fileReader.onload = (e) => {
       const text = e.target?.result as string
-      const movieList = text.split('\n').map((movie) => movie.trim().replace(/[^a-zA-Z0-9\s]/g, "")).filter(Boolean)
+
+      const movieList = text.split('\n')
+      .map((movie) => movie.trim())
+      .map((movie) => movie.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+      .map((movie) => movie.toLocaleLowerCase())
+      .map((movie) => {
+        const cleanedMovie = movie.replace(/@/g, 'a')
+                                  .replace(/[^a-z0-9\s@\-]/g, "")
+        return cleanedMovie;
+      })
+      .filter(Boolean)
+
       setMovieList(movieList)
       setSelectedMovies(Object.fromEntries(movieList.map((movie) => [movie, true]))) 
     }
@@ -87,7 +98,7 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
     setSelectedMovies((prev) => ({...prev, [movie]: !prev[movie]}))
   }
 
-  const searchMovies = () => {
+  const searchMovies = (): void => {
     setSearchTriggered(true)
   }
 

@@ -17,22 +17,25 @@ const CheckboxList: FC = () => {
   }
 
   return (
-    <div>
+    <div className="bg-white rounded-xl p-4 shadow-lg max-w-sm">
+      <ul className="max-h-64 overflow-y-auto space-y-2 p-2">
       {movieList.map(((item, index) => {
         return (
-          <ul key={`${item}-${index}`} className="space-y-2">
-            <li className="flex items-center font-semibold text-white text-lg capitalize">
-            <input
-              type="checkbox"
-              className="mr-2 bg-white"
-              checked={selectedMovies[item]}
-              onChange={() => handleCheckBox(item)}
-            />
-            {item}
+            <li
+              key={`${item}-${index}`}
+              className="flex items-center font-semibold text-lg capitalize"
+            >
+              <input
+                type="checkbox"
+                className="mr-2 h-4 w-4 accent-purple-600 rounded cursor-pointer"
+                checked={selectedMovies[item]}
+                onChange={() => handleCheckBox(item)}
+              />
+              {item}
             </li>
-          </ul>
         )
       }))}
+      </ul>
       {
         movieList.length !== 0 && 
         <Button title="Search" buttonFunc={handleSearchButton} disabled={disabled}/> 

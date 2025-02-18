@@ -1,6 +1,6 @@
 import { MovieData } from "../context/MoviesContext"
 
-export const getGenreName = (genreIds: number[], genreMap: Record<number, string>) => {
+export const getGenreName = (genreIds: number[], genreMap: Record<number, string>): string => {
   return genreIds.map(id => genreMap[id] || 'unknown').join(", ")
 }
 

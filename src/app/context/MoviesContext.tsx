@@ -4,36 +4,8 @@
 import { FC, useContext, createContext, useState} from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from  'axios'
+import { MoviesContextType } from "../constants/types";
 
-export type MovieData = {
-  adult: boolean,
-  "backdrop_path": string,
-  "genre_ids": number []
-  id: number,
-  "original_language": string,
-  "original_title": string,
-  overview: string,
-  popularity: number,
-  "poster_path": string,
-  "release_date": string,
-  title: string,
-  video: boolean,
-  "vote_average": number,
-  "vote_count": number,
-  genres?: string
-}
-
-interface MoviesContextType {
-  movieList: string[]
-  selectedMovies: Record<string, boolean>
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  handleCheckBox: (movie: string, action: 'deselect' | 'select') => void
-  searchMovies: () => void
-  isLoading: boolean
-  error: any
-  data: MovieData[] | undefined
-  genreMap: Record<number, string>
-}
 
 const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY
 const BASE_URL = 'https://api.themoviedb.org/3'

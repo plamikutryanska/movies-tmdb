@@ -4,7 +4,7 @@ import { useMovies } from "../context/MoviesContext"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import Button from "../components/Button"
 import DetailsSection from "../components/DetailsSection"
-import { MovieData } from "../context/MoviesContext"
+import { MovieData } from "../constants/types"
 import { handleSaveButton, formatDate, getGenreName } from "../utils/utils"
 
 const MovieDetails: FC = () => {

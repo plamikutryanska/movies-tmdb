@@ -7,7 +7,7 @@ import Button from "./Button"
 const CheckboxList: FC = () => {
   const {movieList, selectedMovies, handleCheckBox, searchMovies} = useMovies()
   const [allSelected, setAllSelected] = useState<boolean>(true)
-  
+
   const selectedMoviesLength = Object.values(selectedMovies).filter(item => item === true).length
   const disabled = selectedMoviesLength === 0
 
@@ -49,7 +49,7 @@ const CheckboxList: FC = () => {
           >
             <input
               type="checkbox"
-              className="mr-2 h-4 w-4 accent-purple-600 rounded cursor-pointer"
+              className="mr-2 h-4 w-4 min-w-4 min-h-4 accent-purple-600 rounded cursor-pointer"
               checked={selectedMovies[item]}
               onChange={() => handleCheckboxChange(item)}
             />

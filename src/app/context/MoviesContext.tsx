@@ -27,7 +27,7 @@ interface MoviesContextType {
   movieList: string[]
   selectedMovies: Record<string, boolean>
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  handleCheckBox: (movie: string) => void
+  handleCheckBox: (movie: string, action: 'deselect' | 'select') => void
   searchMovies: () => void
   isLoading: boolean
   error: any
@@ -119,8 +119,12 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
     fileReader.readAsText(file)
   }
 
-  const handleCheckBox = (movie: string): void => {
-    setSelectedMovies((prev) => ({...prev, [movie]: !prev[movie]}))
+  const handleCheckBox = (movie: string, action: 'deselect' | 'select'): void => {
+    setSelectedMovies((prev) => {
+      const newSelectedMovies = {...prev}
+      newSelectedMovies[movie] = action === 'select'
+      return newSelectedMovies
+    })
   }
 
   const searchMovies = (): void => {

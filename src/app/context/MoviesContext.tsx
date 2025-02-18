@@ -5,7 +5,7 @@ import { FC, useContext, createContext, useState} from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from  'axios'
 
-type MovieData = {
+export type MovieData = {
   adult: boolean,
   "backdrop_path": string,
   "genre_ids": number []
@@ -44,7 +44,8 @@ const fetchMovies = async (movieTitle: string) => {
       query: movieTitle
     }
   })
-  return response.data.results[0] // assuming 1st response is the best
+
+  return response.data.results[0]
 }
 
 const MoviesContext = createContext<MoviesContextType | undefined>(undefined)
@@ -65,8 +66,7 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
       return Promise.all(fetchData);
     },
     enabled: searchTriggered,
-    staleTime: Infinity
-    
+    staleTime: Infinity 
   })
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {

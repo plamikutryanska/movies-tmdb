@@ -8,7 +8,7 @@ type DetailsRowProps = {
 const DetailsRow: FC<DetailsRowProps> = ({label, value}) => {
   return (  
   <div className="flex">
-    <div className="font-semibold mr-2">{label}:</div>
+    <div className="font-semibold mr-2">{label}</div>
     <div>{value}</div>
   </div>
   )

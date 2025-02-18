@@ -5,10 +5,10 @@ import { TrashIcon } from "@heroicons/react/24/outline"
 import Button from "../components/Button"
 import DetailsSection from "../components/DetailsSection"
 import { MovieData } from "../context/MoviesContext"
-import { handleSaveButton } from "../utils/utils"
+import { handleSaveButton, formatDate, getGenreName } from "../utils/utils"
 
 const MovieDetails: FC = () => {
-  const {data} = useMovies()
+  const {data, genreMap} = useMovies()
   const [movies, setMovies] = useState<MovieData[]>([])
 
   useEffect(() => {
@@ -26,11 +26,6 @@ const MovieDetails: FC = () => {
       {movies.length === 0 && <div className="text-xl font-semibold text-white flex justify-center">No Movies</div>}
       {
        movies?.map((movie) => {
-          const movieDate = new Date(movie?.release_date)
-          const isValidDate = movieDate instanceof Date
-          const formattedDate = isValidDate && movie?.release_date !== undefined &&  movie.release_date !== '' ?
-          new Intl.DateTimeFormat('en-GB')?.format(movieDate)?.replace(/\//g, '-') : ''
-
           return (
             <div
               key={movie?.id}
@@ -49,16 +44,17 @@ const MovieDetails: FC = () => {
             <DetailsSection
               posterPath={movie?.poster_path}
               overview={movie?.overview}
-              releaseDate={formattedDate}
+              releaseDate={formatDate(movie?.release_date)}
               popularity={movie?.popularity}
               voteAverage={movie?.vote_average}
               voteCount={movie?.vote_count}
+              genre={getGenreName(movie.genre_ids, genreMap)}
             />
             </div>
           )
         })
       }
-      {movies.length !== 0 && <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(movies)}/>}
+      {movies.length !== 0 && <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(movies, genreMap)}/>}
     </div>
   )
 }

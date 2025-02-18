@@ -1,6 +1,19 @@
 import { MovieData } from "../context/MoviesContext"
 
-export const handleSaveButton = async (movies: MovieData[]): Promise<void> => {
+export const getGenreName = (genreIds: number[], genreMap: Record<number, string>) => {
+  return genreIds.map(id => genreMap[id] || 'unknown').join(", ")
+}
+
+
+export const handleSaveButton = async (movies: MovieData[], genreMap: Record<number, string>): Promise<void> => {
+
+  if(!movies) return
+
+  const moviesWithGenres = movies.map((movie) => ({
+    ...movie,
+    genres: getGenreName(movie.genre_ids, genreMap)
+  }))
+
   const url = 'https://jsonplaceholder.typicode.com/posts'
   try {
     const response = await fetch(url, {
@@ -8,7 +21,7 @@ export const handleSaveButton = async (movies: MovieData[]): Promise<void> => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(movies)
+      body: JSON.stringify(moviesWithGenres)
     })
 
     if(!response.ok) {
@@ -21,4 +34,13 @@ export const handleSaveButton = async (movies: MovieData[]): Promise<void> => {
   } catch (error) {
     console.log('Error saving data: ', error)
   }
+}
+
+export const formatDate = (releaseDate: string): string => {
+  const movieDate = new Date(releaseDate)
+  const isValidDate = movieDate instanceof Date
+  const formattedDate = isValidDate && releaseDate !== undefined &&  releaseDate !== '' ?
+  new Intl.DateTimeFormat('en-GB')?.format(movieDate)?.replace(/\//g, '-') : ''
+
+  return formattedDate
 }

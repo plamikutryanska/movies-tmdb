@@ -19,7 +19,8 @@ export type MovieData = {
   title: string,
   video: boolean,
   "vote_average": number,
-  "vote_count": number
+  "vote_count": number,
+  genres?: string
 }
 
 interface MoviesContextType {
@@ -31,6 +32,7 @@ interface MoviesContextType {
   isLoading: boolean
   error: any
   data: MovieData[] | undefined
+  genreMap: Record<number, string>
 }
 
 const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY
@@ -46,6 +48,23 @@ const fetchMovies = async (movieTitle: string) => {
   })
 
   return response.data.results.length > 0 ? response.data.results[0] : null
+}
+
+const fetchGenres = async (): Promise<Record<number, string>> => {
+
+  const response = await axios.get(`${BASE_URL}/genre/movie/list`, {
+    params: {
+      api_key: apiKey,
+    }
+  })
+
+  return response.data.genres.reduce(
+    (acc: Record<number, string>, genre: {id: number, name: string}) => {
+      acc[genre.id] = genre.name
+      return acc
+    },
+    {}
+  )
 }
 
 const MoviesContext = createContext<MoviesContextType | undefined>(undefined)
@@ -66,6 +85,12 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
       return fetchData.filter(Boolean)
     },
     enabled: searchTriggered,
+    staleTime: Infinity 
+  })
+
+  const {data: genreMap = {}} = useQuery({
+    queryKey: ['genres'],
+    queryFn: fetchGenres,
     staleTime: Infinity 
   })
 
@@ -110,7 +135,8 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
     searchMovies,
     isLoading,
     error,
-    data
+    data,
+    genreMap
   }
 
   return (

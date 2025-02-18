@@ -9,6 +9,7 @@ type DetailsSectionProps =  {
   popularity: number
   voteAverage: number
   voteCount: number
+  genre: string
 }
 
 const DetailsSection: FC<DetailsSectionProps> = ({
@@ -17,7 +18,8 @@ const DetailsSection: FC<DetailsSectionProps> = ({
   releaseDate,
   popularity,
   voteAverage,
-  voteCount
+  voteCount,
+  genre
 }) => {
   return (
     <div className="flex space-x-4">
@@ -29,6 +31,7 @@ const DetailsSection: FC<DetailsSectionProps> = ({
     <div className="flex flex-col space-y-2">
       <div className="text-sm text-wrap">{overview}</div>
       <DetailsRow label="Release Date:" value={releaseDate}/>
+      <DetailsRow label="Genre:" value={genre}/>
       <DetailsRow label="Popularity:" value={popularity}/>
       <div className="flex items-center">
         <div className="font-semibold mr-2">Average Vote:</div>

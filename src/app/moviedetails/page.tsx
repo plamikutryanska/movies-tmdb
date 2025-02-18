@@ -6,6 +6,7 @@ import Button from "../components/Button"
 import DetailsSection from "../components/DetailsSection"
 import { MovieData } from "../constants/types"
 import { handleSaveButton, formatDate, getGenreName } from "../utils/utils"
+import SortButtons from "../components/SortButtons"
 
 const MovieDetails: FC = () => {
   const {data, genreMap} = useMovies()
@@ -21,9 +22,20 @@ const MovieDetails: FC = () => {
     setMovies((prvMovies) => prvMovies.filter(movie => movie?.id !== movieId))
   }
 
+  const handleVoteSort = (direction: 'ascending' | 'descending') => {
+    const sortedMovies = [...movies]
+    sortedMovies.sort((a,b) => {
+      return direction === 'ascending' ?
+        a.vote_average - b.vote_average :
+        b.vote_average - a.vote_average
+    })
+    setMovies(sortedMovies)
+  }
+
   return (
     <div className="flex flex-col">
       {movies.length === 0 && <div className="text-xl font-semibold text-white flex justify-center">No Movies</div>}
+      {movies.length > 1 && <SortButtons sortFunction={handleVoteSort}/>}
       {
        movies?.map((movie) => {
           return (

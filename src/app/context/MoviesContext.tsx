@@ -5,6 +5,7 @@ import { FC, useContext, createContext, useState} from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from  'axios'
 import { MoviesContextType } from "../constants/types";
+import { Value } from "sass";
 
 
 const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY
@@ -85,8 +86,12 @@ export const MoviesProvider: FC<{children: React.ReactNode}> = ({children}) => {
       })
       .filter(Boolean)
 
-      setMovieList(movieList)
-      setSelectedMovies(Object.fromEntries(movieList.map((movie) => [movie, true]))) 
+      const noDuplicateMovies = movieList.filter((movie, index) => {
+        return movieList.indexOf(movie) === index
+      })
+
+      setMovieList(noDuplicateMovies)
+      setSelectedMovies(Object.fromEntries(noDuplicateMovies.map((movie) => [movie, true]))) 
     }
     fileReader.readAsText(file)
   }

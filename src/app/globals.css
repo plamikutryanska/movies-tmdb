@@ -29,3 +29,11 @@
 .details-container {
   @apply flex flex-col bg-white p-6 rounded-xl shadow-lg mb-4
 }
+
+.checkbox {
+  @apply mr-2 h-4 w-4 min-w-4 min-h-4 accent-purple-600 rounded cursor-pointer
+}
+
+.list-container {
+  @apply flex items-center font-semibold text-lg capitalize
+}

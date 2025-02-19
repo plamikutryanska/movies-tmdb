@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react"
 import { useMovies } from "../context/MoviesContext"
 import { useRouter } from "next/navigation"
 import Button from "./Button"
+import CheckboxItem from "./CheckboxItem"
 
 const CheckboxList: FC = () => {
   const {movieList, selectedMovies, handleCheckBox, searchMovies} = useMovies()
@@ -37,32 +38,35 @@ const CheckboxList: FC = () => {
   }
 
   return (
-    movieList.length > 0 &&
-    <div className="bg-white rounded-xl p-4 shadow-lg max-w-sm">
-    <ul className="max-h-64 overflow-y-auto space-y-2 p-2">
-    <button onClick={toggleSelectAll}>{allSelected ? 'Deselect All' : 'Select All'}</button>
-    {movieList.map(((item, index) => {
-      return (
-          <li
-            key={`${item}-${index}`}
-            className="flex items-center font-semibold text-lg capitalize"
+   <>
+   {
+        movieList.length > 0 &&
+        <div className="bg-white rounded-xl p-4 shadow-lg max-w-sm">
+        <div className="flex justify-end mb-2">
+          <button
+            onClick={toggleSelectAll}
           >
-            <input
-              type="checkbox"
-              className="mr-2 h-4 w-4 min-w-4 min-h-4 accent-purple-600 rounded cursor-pointer"
-              checked={selectedMovies[item]}
-              onChange={() => handleCheckboxChange(item)}
-            />
-            {item}
-          </li>
-      )
-    }))}
-    </ul>
-    {
-      movieList.length !== 0 && 
-      <Button title="Search" buttonFunc={handleSearchButton} disabled={disabled}/> 
-    }
-  </div>
+            {allSelected ? 'Deselect All' : 'Select All'}
+          </button>
+        </div>
+        <ul className="max-h-64 overflow-y-auto space-y-2 p-2">
+        {movieList.map(((item, index) => (
+          <CheckboxItem
+            key={`${item}-${index}`}
+            item={item}
+            isChecked={selectedMovies[item]}
+            onChange={() => handleCheckboxChange(item)}
+          />
+        )))}
+        </ul>
+        <Button
+          title="Search"
+          buttonFunc={handleSearchButton}
+          disabled={disabled}
+        /> 
+      </div>
+   }
+   </>
 
   )
 }

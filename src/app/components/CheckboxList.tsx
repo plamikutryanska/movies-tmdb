@@ -8,12 +8,12 @@ const CheckboxList: FC = () => {
   const {movieList, selectedMovies, handleCheckBox, searchMovies} = useMovies()
   const [allSelected, setAllSelected] = useState<boolean>(true)
 
-  const selectedMoviesLength = Object.values(selectedMovies).filter(item => item === true).length
-  const disabled = selectedMoviesLength === 0
+  const selectedMoviesLength: number = Object.values(selectedMovies).filter(item => item === true).length
+  const disabled: boolean = selectedMoviesLength === 0
 
   const router = useRouter()
 
-  const handleSearchButton = () => {
+  const handleSearchButton = (): void => {
     searchMovies()
     router.push("/moviedetails")
   }
@@ -23,7 +23,7 @@ const CheckboxList: FC = () => {
     setAllSelected(areAllMoviesSelected)
   }, [selectedMovies, movieList])
 
-  const toggleSelectAll = () => {
+  const toggleSelectAll = (): void => {
     const action = allSelected ? 'deselect' : 'select'
 
     movieList.forEach((movie) => {
@@ -32,7 +32,7 @@ const CheckboxList: FC = () => {
     setAllSelected(!allSelected)
   }
 
-  const handleCheckboxChange = (movie: string) => {
+  const handleCheckboxChange = (movie: string): void => {
     handleCheckBox(movie, selectedMovies[movie] ? 'deselect' : 'select')
   }
 

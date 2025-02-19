@@ -18,11 +18,11 @@ const MovieDetails: FC = () => {
     }
   }, [data])
 
-  const removeMovies = (movieId: number) => {
+  const removeMovies = (movieId: number): void => {
     setMovies((prvMovies) => prvMovies.filter(movie => movie?.id !== movieId))
   }
 
-  const handleVoteSort = (direction: 'ascending' | 'descending') => {
+  const handleVoteSort = (direction: 'ascending' | 'descending'): void => {
     const sortedMovies = [...movies]
     sortedMovies.sort((a,b) => {
       return direction === 'ascending' ?

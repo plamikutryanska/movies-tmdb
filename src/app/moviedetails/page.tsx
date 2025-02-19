@@ -84,7 +84,7 @@ const MovieDetails: FC = () => {
           )
         })
       }
-      <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(movies, genreMap)}/>
+      <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(filteredMovies, genreMap)}/>
     </div>
   )
 }

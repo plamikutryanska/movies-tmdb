@@ -37,3 +37,7 @@
 .list-container {
   @apply flex items-center font-semibold text-lg capitalize
 }
+
+.dropdown {
+  @apply p-1 rounded bg-white cursor-pointer focus:outline-none
+}

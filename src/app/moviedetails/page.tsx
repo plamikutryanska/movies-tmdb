@@ -34,7 +34,7 @@ const MovieDetails: FC = () => {
     setMovies(sortedMovies)
   }
 
-  const filteredMovies = selectedGenre ? movies.filter((movie) => movie.genre_ids.includes(selectedGenre)) : movies
+  const filteredMovies: MovieData[] = selectedGenre ? movies.filter((movie) => movie.genre_ids.includes(selectedGenre)) : movies
 
     
   if(movies.length === 0) {

@@ -3,7 +3,7 @@ import CheckboxList from "./components/CheckboxList";
 
 export default function Home() {
   return (
-    <div className="container mx-auto p-6 flex flex-col items-center">
+    <div className="home-container">
       <FileInput/>
       <CheckboxList/>
     </div>

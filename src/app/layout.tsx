@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
           <div className="min-h-screen flex flex-col">
-            <header className="sticky top-0 bg-white shadow-md z-10 py-6 text-center text-xl font-semibold">Movies TMDB</header>
+            <header className="header">Movies TMDB</header>
             <QueryClientProvider client={queryClient}>
               <MoviesProvider>
                 <main className="flex-grow p-6 bg-customGradient">{children}</main>

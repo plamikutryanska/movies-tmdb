@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.home-container {
+  @apply container mx-auto p-6 flex flex-col items-center
+}
+
 .file-upload-btn {
   @apply flex items-center space-x-2 cursor-pointer rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-medium shadow-md transition-all mb-6
 }
@@ -12,4 +16,16 @@
 
 .sort-btn {
   @apply w-8 h-8 text-white cursor-pointer
+}
+
+.header {
+  @apply sticky top-0 bg-white shadow-md z-10 py-6 text-center text-xl font-semibold
+}
+
+.text {
+  @apply text-xl font-semibold text-white flex justify-center
+}
+
+.details-container {
+  @apply flex flex-col bg-white p-6 rounded-xl shadow-lg mb-4
 }

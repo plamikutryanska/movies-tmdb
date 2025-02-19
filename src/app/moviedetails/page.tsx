@@ -32,18 +32,17 @@ const MovieDetails: FC = () => {
     setMovies(sortedMovies)
   }
 
+  if(movies.length === 0) {
+    return <div className="text">No Movies</div>
+  }
+
   return (
     <div className="flex flex-col">
-      {movies.length === 0 && <div className="text-xl font-semibold text-white flex justify-center">No Movies</div>}
       {movies.length > 1 && <SortButtons sortFunction={handleVoteSort}/>}
       {
        movies?.map((movie) => {
           return (
-            <div
-              key={movie?.id}
-              className="flex flex-col 
-             bg-white p-6 rounded-xl shadow-lg mb-4"
-             >
+            <div key={movie?.id} className="details-container">
             <div className="flex justify-between mb-2">
                 <div className="text-lg font-semibold capitalize">
                   {movie?.title}
@@ -66,7 +65,7 @@ const MovieDetails: FC = () => {
           )
         })
       }
-      {movies.length !== 0 && <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(movies, genreMap)}/>}
+      <Button title="Save" disabled={false} buttonFunc={() => handleSaveButton(movies, genreMap)}/>
     </div>
   )
 }

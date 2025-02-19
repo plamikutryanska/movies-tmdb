@@ -7,10 +7,12 @@ import DetailsSection from "../components/DetailsSection"
 import { MovieData } from "../constants/types"
 import { handleSaveButton, formatDate, getGenreName } from "../utils/utils"
 import SortButtons from "../components/SortButtons"
+import GenreDropdown from "../components/GenreDropdown"
 
 const MovieDetails: FC = () => {
   const {data, genreMap} = useMovies()
   const [movies, setMovies] = useState<MovieData[]>([])
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null)
 
   useEffect(() => {
     if(data){
@@ -32,15 +34,32 @@ const MovieDetails: FC = () => {
     setMovies(sortedMovies)
   }
 
+  const filteredMovies = selectedGenre ? movies.filter((movie) => movie.genre_ids.includes(selectedGenre)) : movies
+
+    
   if(movies.length === 0) {
     return <div className="text">No Movies</div>
   }
 
+  if(filteredMovies.length === 0) {
+    return (
+      <div>
+        <GenreDropdown genres={genreMap} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre}/>
+        <div className="text mt-6 uppercase">No movies in this genre</div>
+      </div>
+    )
+  }  
+
   return (
     <div className="flex flex-col">
-      {movies.length > 1 && <SortButtons sortFunction={handleVoteSort}/>}
+      {movies.length > 1 && 
+      <div className="flex justify-between mb-4">
+        <GenreDropdown genres={genreMap} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre}/>
+        <SortButtons sortFunction={handleVoteSort}/>
+      </div>
+      }
       {
-       movies?.map((movie) => {
+       filteredMovies?.map((movie) => {
           return (
             <div key={movie?.id} className="details-container">
             <div className="flex justify-between mb-2">

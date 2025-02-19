@@ -7,7 +7,7 @@ type SortButtonsProps = {
 
 const SortButtons:FC<SortButtonsProps> = ({sortFunction}) => {
   return (
-    <div className="flex justify-end items-center mb-4">
+    <div className="flex justify-end items-center">
       <div className="text-white mr-2">Sort by Average Vote</div>
       <ArrowUpCircleIcon className="sort-btn" onClick={() => sortFunction('ascending')}/>
       <ArrowDownCircleIcon className="sort-btn" onClick={() => sortFunction('descending')}/>

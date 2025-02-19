@@ -45,7 +45,7 @@ const MovieDetails: FC = () => {
     return (
       <div>
         <GenreDropdown genres={genreMap} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre}/>
-        <div className="text mt-6 uppercase">No movies in this genre</div>
+        <div className="text mt-6 uppercase">{`No movies in ${selectedGenre && genreMap[selectedGenre]} category`}</div>
       </div>
     )
   }  
